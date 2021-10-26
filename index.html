@@ -7,12 +7,12 @@
 
     <body>
         <div id="menuId">
-            <button onclick="startBaby()">Bebis</button>
-            <button onclick="startEasy()">Lätt</button>
-            <button onclick="startNormal()">Normal</button>
-            <button onclick="startHard()">Svår</button>
-            <button onclick="startImpossible()">Omöjlig</button>
-            <label>Välj svårighetsgrad</label>
+            <button id="babyButton" class="difficultyButton" onclick="startBaby()">Bebis</button>
+            <button id="easyButton" class="difficultyButton" onclick="startEasy()">Lätt</button>
+            <button id="normalButton" class="difficultyButton" onclick="startNormal()">Normal</button>
+            <button id="hardButton" class="difficultyButton" onclick="startHard()">Svår</button>
+            <button id="impossibleButton" class="difficultyButton" onclick="startImpossible()">Omöjlig</button>
+            <label id="chooseDifficulty">Välj svårighetsgrad</label>
         </div>
         <div id="playingId">
             <input id="guessId" type="number" min="1" value="1">
@@ -41,15 +41,18 @@
             hideElement("guessButtonId")
             showElement("menuId")
         } else if (goransNumber < guess) {
-            setResponseText("Görans tal är lite mindre.")
+            setResponseText("Görans tal är lite mindre...")
         } else if (goransNumber > guess) {
-            setResponseText("Görans tal är lite större.")
+            setResponseText("Görans tal är lite större...")
         }
     }
     function guessing() {
         var guess = Number(document.getElementById("guessId").value)
         guesses += 1;
-        controll(guess)
+        setResponseText("Göran funderar...")
+        setTimeout(function() {
+            controll(guess)
+        }, getRndInteger(300, 3000))
         console.log("Gissningar", guesses)
     }
     function startBaby() {
@@ -74,7 +77,7 @@
         guesses = 0;
         goransNumber = getRndInteger(1, max)
         document.getElementById("guessId").max = max
-        setResponseText("Vilket tal 1-" + max + " tänker göran på?")
+        setResponseText("Vilket tal 1-" + max + " tänker Göran på?")
         console.log("Görans nummer", goransNumber)
     }
     function getRndInteger(min, max) {
@@ -91,3 +94,71 @@
         hideElement("playingId")
     }
 </script>
+
+<style>
+    #guessButtonId:hover {
+       background-color: rgb(0, 0, 0);
+       color: white;
+    }
+
+    #guessId {
+        height: 55px;
+        font-size: 50px;
+    }
+
+    body {
+        font-family: Arial, Helvetica, sans-serif;
+        font-size: x-large;
+        font-weight: 600;
+    }
+
+    button {
+       background-color: rgb(173, 173, 173);
+       color: rgb(0, 0, 0);
+       border: solid 2px rgb(73, 73, 73);
+       padding-top: 4px;
+       padding-bottom: 4px;
+       padding-left: 10px;
+       padding-right: 10px;
+       border-radius: 16px;
+       font-size: larger;
+    }
+    
+    #babyButton {
+        background-color: rgb(115, 255, 255);
+        border-color: darkcyan;
+        color:darkcyan;
+    }
+    .difficultyButton {
+        width: 150px;
+        transition: width 1s;
+    }
+    .difficultyButton:hover {
+        color: rgb(255, 255, 255);
+        width: 200px;
+    }
+
+    #easyButton {
+        background-color: rgb(45, 255, 91);
+        border-color: rgb(11, 85, 29);
+        color:rgb(11, 85, 29);
+    }
+
+    #normalButton {
+        background-color: rgb(242, 255, 65);
+        border-color: rgb(109, 119, 20);
+        color:rgb(109, 119, 20);
+    }
+
+    #hardButton {
+        background-color: rgb(255, 0, 0);
+        border-color: rgb(27, 0, 0);
+        color:rgb(27, 0, 0);
+    }
+
+    #impossibleButton {
+        background-color: rgb(162, 0, 255);
+        border-color: rgb(0, 0, 0);
+        color:rgb(0, 0, 0);
+    }
+</style>
