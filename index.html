@@ -15,8 +15,8 @@
             <label>Välj svårighetsgrad</label>
         </div>
         <div id="playingId">
-            <input id="guessId" type="number">
-            <button onclick="guessing()">Gissa</button>
+            <input id="guessId" type="number" min="1" value="1">
+                <button id="guessButtonId" onclick="guessing()">Gissa</button>
             <br>
             <label id="responseId"></label>
         </div>
@@ -38,6 +38,7 @@
             } else {
                 setResponseText("Rätt! PÅ FÖRSTA FÖRSÖKET!")
             }
+            hideElement("guessButtonId")
             showElement("menuId")
         } else if (goransNumber < guess) {
             setResponseText("Görans tal är lite mindre.")
@@ -67,10 +68,12 @@
         startGame(1000000)
     }
     function startGame(max) {
+        showElement("guessButtonId")
         showElement("playingId")
         hideElement("menuId")
         guesses = 0;
         goransNumber = getRndInteger(1, max)
+        document.getElementById("guessId").max = max
         setResponseText("Vilket tal 1-" + max + " tänker göran på?")
         console.log("Görans nummer", goransNumber)
     }
