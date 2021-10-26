@@ -6,20 +6,26 @@
     </head>
 
     <body>
-        <button onclick="startBaby()">Bebis</button>
-        <button onclick="startEasy()">Lätt</button>
-        <button onclick="startNormal()">Normal</button>
-        <button onclick="startHard()">Svår</button>
-        <button onclick="startImpossible()">Omöjlig</button>
-        <input id="guessId" type="number">
-        <button onclick="guessing()">Gissa</button>
-        <br>
-        <label id="responseId">Tyck "start" för att börja, skriv sedan in din gissning i rutan och klicka på "Gissa" för att gissa.</label>
+        <div id="menuId">
+            <button onclick="startBaby()">Bebis</button>
+            <button onclick="startEasy()">Lätt</button>
+            <button onclick="startNormal()">Normal</button>
+            <button onclick="startHard()">Svår</button>
+            <button onclick="startImpossible()">Omöjlig</button>
+            <label>Välj svårighetsgrad</label>
+        </div>
+        <div id="playingId">
+            <input id="guessId" type="number">
+            <button onclick="guessing()">Gissa</button>
+            <br>
+            <label id="responseId"></label>
+        </div>
     </body>
 
 </html>
 
 <script>
+    hideElement("playingId")
     var goransNumber = null;
     var guesses = 0;
     function setResponseText(responseText) {
@@ -31,7 +37,8 @@
                 setResponseText("Rätt! Det tog bara " + guesses + " gissningar!")
             } else {
                 setResponseText("Rätt! PÅ FÖRSTA FÖRSÖKET!")
-            }    
+            }
+            showElement("menuId")
         } else if (goransNumber < guess) {
             setResponseText("Görans tal är lite mindre.")
         } else if (goransNumber > guess) {
@@ -60,6 +67,8 @@
         startGame(1000000)
     }
     function startGame(max) {
+        showElement("playingId")
+        hideElement("menuId")
         guesses = 0;
         goransNumber = getRndInteger(1, max)
         setResponseText("Vilket tal 1-" + max + " tänker göran på?")
@@ -67,5 +76,15 @@
     }
     function getRndInteger(min, max) {
         return Math.floor(Math.random() * (max - min)) + min;
+    }
+    function hideElement(elementId) {
+        document.getElementById(elementId).style.visibility = "hidden"
+    }
+    function showElement(elementId) {
+        document.getElementById(elementId).style.visibility = "visible"
+    }
+    function reset() {
+        showElement("menuId")
+        hideElement("playingId")
     }
 </script>
