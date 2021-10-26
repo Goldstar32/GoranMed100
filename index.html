@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+
+    <head>
+        <title>GöranMed100</title>
+    </head>
+
+    <body>
+        <button onclick="startGame()">Start</button>
+        <input id="guessId" type="number">
+        <button onclick="guessing()">Gissa</button>
+        <br>
+        <label id="responseId">Vad tänker Göran på?</label>
+    </body>
+
+</html>
+
+<script>
+    var goransNumber = null;
+    function setResponseText(responseText) {
+        document.getElementById("responseId").innerText = responseText;
+    }
+    function controll(guess) {
+        if (goransNumber === guess) {
+            setResponseText("Rätt!")
+        } else if (goransNumber < guess) {
+            setResponseText("Görans nummer är lite mindre.")
+        } else if (goransNumber > guess) {
+            setResponseText("Görans nummer är lite större.")
+        }
+    }
+    function guessing() {
+        var guess = Number(document.getElementById("guessId").value)
+        controll(guess)
+        console.log(guess)
+    }
+    function startGame() {
+        goransNumber = getRndInteger(1, 100)
+        console.log(goransNumber)
+    }
+    function getRndInteger(min, max) {
+        return Math.floor(Math.random() * (max - min)) + min;
+    }
+</script>
